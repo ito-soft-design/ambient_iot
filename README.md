@@ -1,8 +1,9 @@
 # AmbientIot
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/ambient_iot`. To experiment with that code, run `bin/console` for an interactive prompt.
+This is a client to access Ambient ( https://ambidata.io ) service which is provided by AmbientData Inc.  
+Ambient draw a data as a Graph.  
 
-TODO: Delete this and the text above, and describe your gem
+AmbientIot is a port from [ambient-python-lib](https://github.com/AmbientDataInc/ambient-python-lib).
 
 ## Installation
 
@@ -22,17 +23,55 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+First, you should get an account for Ambient.  
+Next you make a channel on the Ambient.  
+Then you can get a channel id, a write key and a read key for the channel.  
 
-## Development
+Ambient data take a key from d1 to d8.  
+You set a data as a hash.  
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+### Uploading data:
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+    channel_id = 1234     # set your channel id here
+    write_key = "abc.."   # set write key of the channel
+    client = AmbientIot::Client.new channel_id, write_key:write_key # create a client
+    client << { d1:1, d2:2, d3:3}   # append a data
+    client.sync                     # send to Ambient site
+
+### Getting uploaded data:
+
+    channel_id = 1234     # set your channel id here
+    read_key = "abc.."    # set read key of the channel
+    client = AmbientIot::Client.new channel_id, read_key:read_key # create a client
+    client.read
+
+    # with specific date
+    client.read date:Time.new(2018, 4, 26)
+
+    # with specific range
+    client.read start:Time.new(2018, 4, 20), end:Time.new(2018, 4, 26)
+
+    # with number
+    client.read n:1
+
+### Getting a channel information and recent updated data
+
+    channel_id = 1234     # set your channel id here
+    read_key = "abc.."    # set read key of the channel
+    client = AmbientIot::Client.new channel_id, read_key:read_key # create a client
+    client.info
+
+Timestamp is automatically added.  
+If you don't want to set timestamp, set false the timestamp property.
+
+    client.append_timestamp = false
+
+In this case, timestamp is set on Ambient.
+
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/ambient_iot. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/ito-soft-design/ambient_iot. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 ## License
 
