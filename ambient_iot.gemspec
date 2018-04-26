@@ -9,9 +9,9 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Katsuyoshi Ito"]
   spec.email         = ["kito@itosoft.com"]
 
-  spec.summary       = %q{TODO: Write a short summary, because RubyGems requires one.}
-  spec.description   = %q{TODO: Write a longer description or delete this line.}
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.summary       = %q{AmbientIot is a ruby library which helps to upload IoT data to the Ambient service.}
+  spec.description   = %q{AmbientIot is a ruby library which helps to upload IoT data to the Ambient service.}
+  spec.homepage      = "https://github.com/ito-soft-design/ambient_iot"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
@@ -22,6 +22,8 @@ Gem::Specification.new do |spec|
     raise "RubyGems 2.0 or newer is required to protect against " \
       "public gem pushes."
   end
+
+  spec.add_runtime_dependency 'activesupport', '~> 4.2', '>= 4.2.7'
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
     f.match(%r{^(test|spec|features)/})
