@@ -1,7 +1,8 @@
 # AmbientIot
 
-This is a client to access Ambient ( https://ambidata.io ) service which is provided by AmbientData Inc.  
-Ambient draw a data as a Graph.  
+This is a Gem library to access Ambient ( https://ambidata.io ) service which is provided by AmbientData Inc.  
+You can upload data (such as a IoT) to Ambient.  
+Then Ambient draw a Graph of the data.  
 
 AmbientIot is a port from [ambient-python-lib](https://github.com/AmbientDataInc/ambient-python-lib).
 
@@ -27,16 +28,24 @@ First, you should get an account for Ambient.
 Next you make a channel on the Ambient.  
 Then you can get a channel id, a write key and a read key for the channel.  
 
-Ambient data take a key from d1 to d8.  
-You set a data as a hash.  
-
 ### Uploading data:
+
+Ambient data take keys d1 to d8.  
+You set a data as a hash.  
 
     channel_id = 1234     # set your channel id here
     write_key = "abc.."   # set write key of the channel
     client = AmbientIot::Client.new channel_id, write_key:write_key # create a client
     client << { d1:1, d2:2, d3:3}   # append a data
     client.sync                     # send to Ambient site
+
+Timestamp is automatically added.  
+If you don't want to set timestamp, set false the timestamp property.
+
+    client.append_timestamp = false
+
+In this case, timestamp is set by Ambient.
+
 
 ### Getting uploaded data:
 
@@ -51,8 +60,8 @@ You set a data as a hash.
     # with specific range
     client.read start:Time.new(2018, 4, 20), end:Time.new(2018, 4, 26)
 
-    # with number
-    client.read n:1
+    # with number of data
+    client.read n:1, step:5
 
 ### Getting a channel information and recent updated data
 
@@ -60,13 +69,6 @@ You set a data as a hash.
     read_key = "abc.."    # set read key of the channel
     client = AmbientIot::Client.new channel_id, read_key:read_key # create a client
     client.info
-
-Timestamp is automatically added.  
-If you don't want to set timestamp, set false the timestamp property.
-
-    client.append_timestamp = false
-
-In this case, timestamp is set on Ambient.
 
 
 ## Contributing
@@ -79,4 +81,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
-Everyone interacting in the AmbientIot project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/ambient_iot/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the AmbientIot project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/ito-soft-design/ambient_iot/blob/master/CODE_OF_CONDUCT.md).

@@ -1,6 +1,6 @@
 # AmbientIot
 
-AmbientIotは Ambient ( https://ambidata.io ) サービスにアクセスするためのクライアントです。  
+AmbientIotは Ambient ( https://ambidata.io ) にアクセスするためのGemライブラリーです。  
 Ambientはアップロードされたデータをグラフとして表示してくれるサービスでAmbientData Inc. が提供しています。  
 
 AmbientIotは [ambient-python-lib](https://github.com/AmbientDataInc/ambient-python-lib)を基にRuby用に作ったものです。
@@ -27,24 +27,31 @@ gem 'ambient_iot'
 続いてチャンネルを作成します。  
 チャンネルを作成するとチャンネルID、ライトキー、リードキーが得られます。
 
+### データを送信する場合:
+
 Ambientのデータはd1からd8のキーでデータ系列を表現します。  
 データを与える場合Hashデータとして渡します。
 
-### データの送信:
-
-    channel_id = 1234     # チャンネル IDをセットします。
-    write_key = "abc.."   # チャンネルのライトキーをセットします。
+    channel_id = 1234               # チャンネル IDをセットします。
+    write_key = "abc.."             # チャンネルのライトキーをセットします。
     client = AmbientIot::Client.new channel_id, write_key:write_key # クライアント生成
     client << { d1:1, d2:2, d3:3}   # データを追加します。
-    append a dat
     client.sync                     # データを送信します
 
-### Getting uploaded data:
+時刻はデータ追加時に自動で設定されます。  
+時刻を追加したくない場合は append_timestamp にfalseを設定します。  
 
-    channel_id = 1234     # チャンネル IDをセットします。
-    read_key = "abc.."    # チャンネルのリードキーをセットします。
+    client.append_timestamp = false
+
+この場合はAmbientサイト上で時刻が設定されます。
+
+
+### 送信済みの最新のデータを取得する場合:
+
+    channel_id = 1234               # チャンネル IDをセットします。
+    read_key = "abc.."              # チャンネルのリードキーをセットします。
     client = AmbientIot::Client.new channel_id, read_key:read_key # クライアント生成
-    client.read           # 送信済みのデータを読み込みます
+    client.read                     # 送信済みのデータを読み込みます
 
     # 特定の日付のデータを取得する場合
     client.read date:Time.new(2018, 4, 26)
@@ -53,21 +60,14 @@ Ambientのデータはd1からd8のキーでデータ系列を表現します。
     client.read start:Time.new(2018, 4, 20), end:Time.new(2018, 4, 26)
 
     # データ数を指定する場合
-    client.read n:1
+    client.read n:1, step:5
 
 ### チャンネル情報や最新のデータを取得する場合
 
-    channel_id = 1234     # チャンネル IDをセットします。
-    read_key = "abc.."    # チャンネルのリードキーをセットします。
+    channel_id = 1234               # チャンネル IDをセットします。
+    read_key = "abc.."              # チャンネルのリードキーをセットします。
     client = AmbientIot::Client.new channel_id, read_key:read_key # クライアント生成
-    client.info           ＃ 情報取得
-
-時刻はデータ追加時に自動で設定されます。  
-時刻を追加したくない場合は append_timestamp にfalseを設定します。  
-
-    client.append_timestamp = false
-
-この場合はAmbientサイト上で時刻が設定されます。
+    client.info                     ＃ 情報取得
 
 
 ## Contributing
@@ -80,4 +80,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
-Everyone interacting in the AmbientIot project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/ambient_iot/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the AmbientIot project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/ito-soft-design/ambient_iot/blob/master/CODE_OF_CONDUCT.md).
