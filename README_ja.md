@@ -32,9 +32,12 @@ gem 'ambient_iot'
 Ambientのデータはd1からd8のキーでデータ系列を表現します。  
 データを与える場合Hashデータとして渡します。
 
+    require 'ambient_iot'
+
     channel_id = 1234               # チャンネル IDをセットします。
     write_key = "abc.."             # チャンネルのライトキーをセットします。
     client = AmbientIot::Client.new channel_id, write_key:write_key # クライアント生成
+
     client << { d1:1, d2:2, d3:3}   # データを追加します。
     client.sync                     # データを送信します
 
@@ -48,9 +51,12 @@ Ambientのデータはd1からd8のキーでデータ系列を表現します。
 
 ### 送信済みの最新のデータを取得する場合:
 
+    require 'ambient_iot'
+
     channel_id = 1234               # チャンネル IDをセットします。
     read_key = "abc.."              # チャンネルのリードキーをセットします。
     client = AmbientIot::Client.new channel_id, read_key:read_key # クライアント生成
+
     client.read                     # 送信済みのデータを読み込みます
 
     # 特定の日付のデータを取得する場合
@@ -64,9 +70,12 @@ Ambientのデータはd1からd8のキーでデータ系列を表現します。
 
 ### チャンネル情報や最新のデータを取得する場合
 
+    require 'ambient_iot'
+
     channel_id = 1234               # チャンネル IDをセットします。
     read_key = "abc.."              # チャンネルのリードキーをセットします。
     client = AmbientIot::Client.new channel_id, read_key:read_key # クライアント生成
+
     client.info                     ＃ 情報取得
 
 

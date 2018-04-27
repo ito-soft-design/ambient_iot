@@ -33,9 +33,12 @@ Then you can get a channel id, a write key and a read key for the channel.
 Ambient data take keys d1 to d8.  
 You set a data as a hash.  
 
+    require 'ambient_iot'
+
     channel_id = 1234     # set your channel id here
     write_key = "abc.."   # set write key of the channel
     client = AmbientIot::Client.new channel_id, write_key:write_key # create a client
+
     client << { d1:1, d2:2, d3:3}   # append a data
     client.sync                     # send to Ambient site
 
@@ -49,9 +52,12 @@ In this case, timestamp is set by Ambient.
 
 ### Getting uploaded data:
 
+    require 'ambient_iot'
+
     channel_id = 1234     # set your channel id here
     read_key = "abc.."    # set read key of the channel
     client = AmbientIot::Client.new channel_id, read_key:read_key # create a client
+
     client.read
 
     # with specific date
@@ -65,9 +71,12 @@ In this case, timestamp is set by Ambient.
 
 ### Getting a channel information and recent updated data
 
+    require 'ambient_iot'
+
     channel_id = 1234     # set your channel id here
     read_key = "abc.."    # set read key of the channel
     client = AmbientIot::Client.new channel_id, read_key:read_key # create a client
+
     client.info
 
 
