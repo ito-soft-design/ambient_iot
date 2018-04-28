@@ -1,6 +1,6 @@
 # AmbientIot
 
-This is a Gem library to access Ambient ( https://ambidata.io ) service which is provided by AmbientData Inc.  
+This is a Ruby Gem library to access Ambient ( https://ambidata.io ) service which is provided by AmbientData Inc.  
 You can upload data (such as a IoT) to Ambient.  
 Then Ambient draw a Graph of the data.  
 
@@ -30,7 +30,7 @@ Then you can get a channel id, a write key and a read key for the channel.
 
 ### Uploading data:
 
-Ambient data take keys d1 to d8.  
+Ambient data takes keys d1 to d8.  
 You set a data as a hash.  
 
     require 'ambient_iot'
@@ -59,6 +59,11 @@ In this case, timestamp is set by Ambient.
     client = AmbientIot::Client.new channel_id, read_key:read_key # create a client
 
     client.read
+    # => [
+    #      {:d1=>1, :d2=>2, :d3=>3, :created=>2018-04-27 23:13:18 +0900},
+    #        .
+    #      {:d1=>2, :d2=>1, :created=>2018-04-24 00:00:00 +0900}
+    #    ]
 
     # with specific date
     client.read date:Time.new(2018, 4, 26)
@@ -69,7 +74,7 @@ In this case, timestamp is set by Ambient.
     # with number of data
     client.read n:1, step:5
 
-### Getting a channel information and recent updated data
+### Getting a channel information
 
     require 'ambient_iot'
 
@@ -77,7 +82,9 @@ In this case, timestamp is set by Ambient.
     read_key = "abc.."    # set read key of the channel
     client = AmbientIot::Client.new channel_id, read_key:read_key # create a client
 
-    client.info
+    client.info           # get
+    # => {:ch=>"1234", :user=>"1234", :created=>2018-04-23 22:59:06 +0900, :modified=>2018-04-27 23:23:59 +0900, :lastpost=>2018-04-27 23:13:25 +0900, :charts=>1, :chName=>"Temperature", :chDesc=>"Temperature of the room", :d1=>{:name=>"data1", :color=>"1"}, :d2=>{:name=>"data2", :color=>"2"}, :d3=>{:name=>"", :color=>"3"}, :d4=>{:name=>"", :color=>"4"}, :d5=>{:name=>"", :color=>"5"}, :d6=>{:name=>"", :color=>"6"}, :d7=>{:name=>"", :color=>"7"}, :d8=>{:name=>"", :color=>"8"}, :public=>false, :showlocation=>false, :photoid=>"", :phototitle=>"", :dataperday=>1}
+
 
 
 ## Contributing

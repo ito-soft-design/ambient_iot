@@ -39,7 +39,7 @@ Ambientのデータはd1からd8のキーでデータ系列を表現します。
     client = AmbientIot::Client.new channel_id, write_key:write_key # クライアント生成
 
     client << { d1:1, d2:2, d3:3}   # データを追加します。
-    client.sync                     # データを送信します
+    client.write                    # データを送信します
 
 時刻はデータ追加時に自動で設定されます。  
 時刻を追加したくない場合は append_timestamp にfalseを設定します。  
@@ -58,6 +58,11 @@ Ambientのデータはd1からd8のキーでデータ系列を表現します。
     client = AmbientIot::Client.new channel_id, read_key:read_key # クライアント生成
 
     client.read                     # 送信済みのデータを読み込みます
+    # => [
+    #      {:d1=>1, :d2=>2, :d3=>3, :created=>2018-04-27 23:13:18 +0900},
+    #        .
+    #      {:d1=>2, :d2=>1, :created=>2018-04-24 00:00:00 +0900}
+    #    ]
 
     # 特定の日付のデータを取得する場合
     client.read date:Time.new(2018, 4, 26)
@@ -68,7 +73,7 @@ Ambientのデータはd1からd8のキーでデータ系列を表現します。
     # データ数を指定する場合
     client.read n:1, step:5
 
-### チャンネル情報や最新のデータを取得する場合
+### チャンネル情報を取得する場合
 
     require 'ambient_iot'
 
@@ -77,6 +82,7 @@ Ambientのデータはd1からd8のキーでデータ系列を表現します。
     client = AmbientIot::Client.new channel_id, read_key:read_key # クライアント生成
 
     client.info                     ＃ 情報取得
+    # => {:ch=>"1234", :user=>"1234", :created=>2018-04-23 22:59:06 +0900, :modified=>2018-04-27 23:23:59 +0900, :lastpost=>2018-04-27 23:13:25 +0900, :charts=>1, :chName=>"室温", :chDesc=>"部屋の温度", :d1=>{:name=>"データ1", :color=>"1"}, :d2=>{:name=>"データ2", :color=>"2"}, :d3=>{:name=>"", :color=>"3"}, :d4=>{:name=>"", :color=>"4"}, :d5=>{:name=>"", :color=>"5"}, :d6=>{:name=>"", :color=>"6"}, :d7=>{:name=>"", :color=>"7"}, :d8=>{:name=>"", :color=>"8"}, :public=>false, :showlocation=>false, :photoid=>"", :phototitle=>"", :dataperday=>1}
 
 
 ## Contributing
