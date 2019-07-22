@@ -14,8 +14,6 @@ Gem::Specification.new do |spec|
   spec.homepage      = "https://github.com/ito-soft-design/ambient_iot"
   spec.license       = "MIT"
 
-  spec.add_runtime_dependency 'activesupport', '~> 4.2', '>= 4.2.7'
-
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
     f.match(%r{^(test|spec|features)/})
   end
